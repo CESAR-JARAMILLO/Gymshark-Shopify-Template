@@ -17,11 +17,7 @@
 {%- endif -%}
 
 {%- style -%}
-  .header {
-    padding: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px 3rem {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px 3rem;
-  }
-
-  .section-header {
+  .section-ader {
     position: sticky;
     top: 0;
     z-index: 40;
@@ -31,13 +27,6 @@
   @media screen and (min-width: 750px) {
     .section-header {
       margin-bottom: {{ section.settings.margin_bottom }}px;
-    }
-  }
-
-  @media screen and (min-width: 990px) {
-    .header {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
 
@@ -103,13 +92,13 @@
     <nav class="header1__collections-nav">
       {%- if section.settings.menu != blank -%}
         {%- for link in section.settings.menu.links -%}
-          <a href="{{ link.url  }}" class="header1__collection-link"> WOMEN </a>
+          <a href="{{ link.url  }}" class="header1__collection-link">{{ link.title }}</a>
         {%- endfor -%}
       {%- endif -%}
     </nav>
 
     <nav class="header1__icon-nav">
-      <a href="/favorites" class="header1__icon-link">
+      <a href="/favorites" class="header1__icon-link header1__icon-heart">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

@@ -439,6 +439,9 @@ table {
   .header1 {
     padding: 0 20px;
   }
+  .header1__icon-nav .header1__icon-heart {
+    display: none;
+  }
   .header1__menu-button {
     display: flex;
   }
