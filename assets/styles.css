@@ -477,15 +477,20 @@ body {
 .announcement-bar__text:hover {
   text-decoration: underline;
 }
-.announcement-bar__icon {
+.announcement-bar__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   right: 20px;
   top: 50%;
   transform: translateY(-50%);
   color: #000;
+  background: none;
+  border: none;
   cursor: pointer;
 }
-.announcement-bar__icon svg {
+.announcement-bar__toggle svg {
   width: 20px;
   height: 20px;
 }
