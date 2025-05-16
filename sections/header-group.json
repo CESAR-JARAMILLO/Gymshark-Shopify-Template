@@ -29,14 +29,38 @@
             "text": "Welcome to our store",
             "link": ""
           }
+        },
+        "announcement_agJnXT": {
+          "type": "announcement",
+          "settings": {
+            "text": "Hello!",
+            "link": ""
+          }
+        },
+        "announcement_cLHBgD": {
+          "type": "announcement",
+          "settings": {
+            "text": "Buy!!",
+            "link": ""
+          }
+        },
+        "announcement_e68zX8": {
+          "type": "announcement",
+          "settings": {
+            "text": "Please!",
+            "link": ""
+          }
         }
       },
       "block_order": [
-        "announcement-bar-0"
+        "announcement-bar-0",
+        "announcement_agJnXT",
+        "announcement_cLHBgD",
+        "announcement_e68zX8"
       ],
       "settings": {
-        "auto_rotate": false,
-        "change_slides_speed": 5,
+        "auto_rotate": true,
+        "change_slides_speed": 3,
         "color_scheme": "",
         "show_line_separator": true,
         "show_social": false,
