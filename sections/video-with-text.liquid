@@ -24,6 +24,59 @@
   endif
 -%}
 
+<section class="hero-video">
+  <video
+    ref={videoRef}
+    class="hero-video__background"
+    src="/gymshark-women-banner.mp4"
+    autoPlay
+    muted
+    loop
+    playsInline
+  />
+
+  <div class="hero-video__overlay">
+    <img
+      src="{{ section.settings.video.preview_image | image_url: width: 1500 }}"
+      alt="Vital is an icon - 6.9 million of you agree"
+      class="hero-video__title-image"
+    />
+    <a href="#contact" class="hero-video__cta">
+      Shop Now
+    </a>
+  </div>
+
+  <button
+    class="hero-video__toggle"
+    onClick={handleToggle}
+    aria-label={isPlaying ? "Pause video" : "Play video"}
+  >
+    {isPlaying ? (
+      <svg
+        class="hero-video__icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        width="20"
+        height="20"
+      >
+        <path d="M6 4h4v16H6zM14 4h4v16h-4z" />
+      </svg>
+    ) : (
+      <svg
+        class="hero-video__icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        width="20"
+        height="20"
+      >
+        <path d="M8 5v14l11-7z" />
+      </svg>
+    )}
+  </button>
+</section>
+
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.section_color_scheme }}">
   <div class="page-width">
     <div class="image-with-text image-with-text--{{ section.settings.content_layout }} isolate{% if settings.text_boxes_border_thickness > 0 and settings.text_boxes_border_opacity > 0 and settings.media_border_thickness > 0 and settings.media_border_opacity > 0 %} collapse-borders{% endif %}{% unless section.settings.color_scheme == section.settings.section_color_scheme and settings.media_border_thickness > 0 and settings.text_boxes_shadow_opacity == 0 and settings.text_boxes_border_thickness == 0 or settings.text_boxes_border_opacity == 0 %} collapse-corners{% endunless %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
@@ -108,13 +161,18 @@
 </div>
 
 {% schema %}
-{
-  "name": "Video with Text",
-  "class": "section",
-  "disabled_on": {
-    "groups": ["header", "footer"]
-  },
-  "settings": [
+    {
+      "name": "Video with Text",
+      "class": "section",
+      "disabled_on": {
+        "groups": ["header", "footer"]
+      },
+      "settings": [
+        {
+      "type": "video",
+      "id": "video",
+      "label": "Choose a video"
+    },
     {
       "type": "image_picker",
       "id": "image",
