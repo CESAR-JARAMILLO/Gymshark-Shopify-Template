@@ -42,6 +42,7 @@
       ],
       "name": "Video with Text",
       "settings": {
+        "video": "shopify://files/videos/gymshark-women-banner.mp4",
         "height": "adapt",
         "desktop_image_width": "medium",
         "layout": "image_first",
