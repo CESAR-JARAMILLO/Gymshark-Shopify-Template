@@ -27,26 +27,12 @@
     {%- if section.blocks.first.settings.text != blank -%}
       {%- if section.blocks.first.settings.link != blank -%}
         <a href="{{ section.blocks.first.settings.link }}" class="announcement-bar__text">
-          Big Summer Sale – Up to 50% Off!
+          {{ section.blocks.first.settings.text | escape }}
       {%- endif -%}
-      <p class="announcement-bar__text">
-        {{ section.blocks.first.settings.text | escape }}
-      </p>
       {%- if section.blocks.first.settings.link != blank -%}
         </a>
       {%- endif -%}
     {%- endif -%}
-    <div class="announcement-bar__icon">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        width="20"
-        height="20"
-      >
-        <path d="M8 5v14l11-7z" />
-      </svg>
-    </div>
   </div>
 {%- elsif section.blocks.size > 1 -%}
   <slideshow-component
@@ -56,6 +42,19 @@
     aria-label="{{ 'sections.announcements.announcement_bar' | t }}"
   >
     <div class="announcement-bar-slider slider-buttons">
+      <!-- Hidden Previous Button -->
+      <button
+        type="button"
+        class="slider-button slider-button--prev visually-hidden"
+        name="previous"
+        aria-hidden="true"
+        tabindex="-1"
+      >
+        <span class="svg-wrapper">
+          {{ 'icon-caret.svg' | inline_asset_content }}
+        </span>
+      </button>
+
       <div
         class="grid grid--1-col slider slider--everywhere"
         id="Slider-{{ section.id }}"
@@ -86,10 +85,10 @@
                     class="announcement-bar__link link link--text focus-inset animate-arrow"
                   >
                 {%- endif -%}
-                <p class="announcement-bar__message h5">
+                <p class="announcement-bar__text">
                   <span>{{ block.settings.text | escape }}</span>
                   {%- if block.settings.link != blank -%}
-                    {{- 'icon-arrow.svg' | inline_asset_content -}}
+                    {{ 'icon-arrow.svg' | inline_asset_content }}
                   {%- endif -%}
                 </p>
                 {%- if block.settings.link != blank -%}
@@ -100,41 +99,94 @@
           </div>
         {%- endfor -%}
       </div>
+
+      <!-- Hidden Next Button -->
+      <button
+        type="button"
+        class="slider-button slider-button--next visually-hidden"
+        name="next"
+        aria-hidden="true"
+        tabindex="-1"
+      >
+        <span class="svg-wrapper">
+          {{ 'icon-caret.svg' | inline_asset_content }}
+        </span>
+      </button>
+
+      <!-- Play Icon -->
+      <button
+        class="announcement-bar__toggle announcement-bar__icon"
+        aria-label="Toggle autoplay"
+        style="border: none; background: transparent; cursor: pointer;"
+        type="button"
+      >
+        <svg
+          class="announcement-bar__icon--play"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          width="20"
+          height="20"
+        >
+          <path d="M8 5v14l11-7z" />
+        </svg>
+        <svg
+          class="announcement-bar__icon--pause"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          width="20"
+          height="20"
+          style="display: none"
+        >
+          <path d="M6 4h4v16H6zM14 4h4v16h-4z" />
+        </svg>
+      </button>
     </div>
   </slideshow-component>
-  {%- if request.design_mode -%}
-    <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
-    <style>
-      /* theme editor power preview fix */
-      .announcement-bar-slider .slider__slide[aria-hidden='true'] {
-        visibility: hidden;
-      }
-    </style>
-  {%- endif -%}
 {%- endif -%}
-<div class="localization-wrapper">
-  {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
-    <localization-form class="small-hide medium-hide">
-      {%- form 'localization', id: 'AnnouncementCountryForm', class: 'localization-form' -%}
-        <div>
-          <h2 class="visually-hidden" id="AnnouncementCountryLabel">{{ 'localization.country_label' | t }}</h2>
-          {%- render 'country-localization', localPosition: 'AnnouncementCountry' -%}
-        </div>
-      {%- endform -%}
-    </localization-form>
-  {% endif %}
 
-  {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
-    <localization-form class="small-hide medium-hide">
-      {%- form 'localization', id: 'AnnouncementLanguageForm', class: 'localization-form' -%}
-        <div>
-          <h2 class="visually-hidden" id="AnnouncementLanguageLabel">{{ 'localization.language_label' | t }}</h2>
-          {%- render 'language-localization', localPosition: 'AnnouncementLanguage' -%}
-        </div>
-      {%- endform -%}
-    </localization-form>
-  {%- endif -%}
-</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggleBtn = document.querySelector('.announcement-bar__toggle');
+    const playIcon = toggleBtn?.querySelector('.announcement-bar__icon--play');
+    const pauseIcon = toggleBtn?.querySelector('.announcement-bar__icon--pause');
+    const slider = document.querySelector('.slider');
+    const nextBtn = document.querySelector('.slider-button--next');
+
+    if (!toggleBtn || !playIcon || !pauseIcon || !slider || !nextBtn) return;
+
+    const autoplaySpeed = Number(slider.dataset.speed) * 1000 || 5000;
+    let intervalId;
+
+    const startAutoplay = () => {
+      stopAutoplay(); // clear previous interval if any
+      intervalId = setInterval(() => {
+        nextBtn.click();
+      }, autoplaySpeed);
+      playIcon.style.display = 'none';
+      pauseIcon.style.display = 'inline';
+      slider.dataset.autoplay = 'true';
+    };
+
+    const stopAutoplay = () => {
+      clearInterval(intervalId);
+      playIcon.style.display = 'inline';
+      pauseIcon.style.display = 'none';
+      slider.dataset.autoplay = 'false';
+    };
+
+    // Start autoplay if enabled initially
+    if (slider.dataset.autoplay === 'true') {
+      startAutoplay();
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      const isPlaying = slider.dataset.autoplay === 'true';
+      isPlaying ? stopAutoplay() : startAutoplay();
+    });
+  });
+</script>
 
 {% schema %}
 {
@@ -160,47 +212,6 @@
       "unit": "s",
       "label": "t:sections.announcement-bar.settings.change_slides_speed.label",
       "default": 5
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:sections.all.colors.label",
-      "default": "scheme-4"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_line_separator",
-      "default": true,
-      "label": "t:sections.header.settings.show_line_separator.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.announcement-bar.settings.heading_utilities.content"
-    },
-    {
-      "type": "paragraph",
-      "content": "t:sections.announcement-bar.settings.paragraph.content"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_social",
-      "default": false,
-      "label": "t:sections.announcement-bar.settings.show_social.label",
-      "info": "t:sections.announcement-bar.settings.show_social.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_country_selector",
-      "default": false,
-      "label": "t:sections.announcement-bar.settings.enable_country_selector.label",
-      "info": "t:sections.announcement-bar.settings.enable_country_selector.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_language_selector",
-      "default": false,
-      "label": "t:sections.announcement-bar.settings.enable_language_selector.label",
-      "info": "t:sections.announcement-bar.settings.enable_language_selector.info"
     }
   ],
   "blocks": [
