@@ -457,3 +457,40 @@ table {
 body {
   background-color: #d2d2d2;
 }
+.announcement-bar {
+  position: relative;
+  background-color: #f5f5f5;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  min-height: 48px;
+}
+.announcement-bar__text {
+  max-width: 90%;
+  margin: 0 auto;
+  cursor: pointer;
+}
+.announcement-bar__text:hover {
+  text-decoration: underline;
+}
+.announcement-bar__icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #000;
+  cursor: pointer;
+}
+.announcement-bar__icon svg {
+  width: 20px;
+  height: 20px;
+}
+@media (max-width: 480px) {
+  .announcement-bar .announcement-bar__text {
+    max-width: 220px;
+  }
+}
