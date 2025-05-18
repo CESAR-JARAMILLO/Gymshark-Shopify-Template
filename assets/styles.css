@@ -506,6 +506,7 @@ body {
   height: 100vh;
   max-height: 580px;
   overflow: hidden;
+  z-index: 0;
 }
 .hero-video__background {
   position: absolute;
@@ -535,6 +536,20 @@ body {
   width: 100%;
   height: auto;
 }
+.hero-video__heading {
+  max-width: 500px;
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0;
+  color: #fff;
+}
+.hero-video__description {
+  max-width: 500px;
+  font-size: 1.25rem;
+  color: #e0e0e0;
+  max-width: 600px;
+  margin: 0 auto;
+}
 .hero-video__cta {
   display: inline-block;
   padding: 1rem 1.5rem;
@@ -558,7 +573,7 @@ body {
   padding: 8px;
   border-radius: 50%;
   cursor: pointer;
-  z-index: 3;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
