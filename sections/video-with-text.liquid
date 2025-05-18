@@ -16,6 +16,8 @@
       section.settings.video
       | video_tag: autoplay: true, muted: true, loop: true, playsinline: true, class: 'hero-video__background'
     }}
+  {% else %}
+    {{ 'hero-apparel-1' | placeholder_svg_tag: 'hero-video__background placeholder-svg' }}
   {% endif %}
 
   <div class="hero-video__overlay">
