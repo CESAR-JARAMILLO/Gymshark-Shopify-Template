@@ -26,28 +26,28 @@
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text": "Welcome to our store",
+            "text": "Get Two Power T-Shirts For $50 🔥",
             "link": ""
           }
         },
         "announcement_agJnXT": {
           "type": "announcement",
           "settings": {
-            "text": "Hello!",
+            "text": "REFER A FRIEND TO EARN $10 OFF YOUR NEXT PURCHASE OF $50+ 👭",
             "link": ""
           }
         },
         "announcement_cLHBgD": {
           "type": "announcement",
           "settings": {
-            "text": "Buy!!",
+            "text": "Free standard shipping over $75 🚚",
             "link": ""
           }
         },
         "announcement_e68zX8": {
           "type": "announcement",
           "settings": {
-            "text": "Please!",
+            "text": "15% Student Discount ‍🎓",
             "link": ""
           }
         }
@@ -60,12 +60,7 @@
       ],
       "settings": {
         "auto_rotate": true,
-        "change_slides_speed": 3,
-        "color_scheme": "",
-        "show_line_separator": true,
-        "show_social": false,
-        "enable_country_selector": false,
-        "enable_language_selector": false
+        "change_slides_speed": 3
       }
     }
   },
