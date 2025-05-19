@@ -1,0 +1,134 @@
+<section class="cards-section">
+  <div class="cards-section__header">
+    <h2 class="cards-section__title">{{ section.settings.title }}</h2>
+    <div class="cards-section__controls">
+      <button class="cards-section__control" onclick="scrollCards('left')" aria-label="Scroll left">
+        <!-- Left Chevron SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+        </svg>
+      </button>
+      <button class="cards-section__control" onclick="scrollCards('right')" aria-label="Scroll right">
+        <!-- Right Chevron SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="cards-section__row" id="cardsContainer">
+    {% for block in section.blocks %}
+      <div class="card">
+        <img
+          src="{{ block.settings.image | img_url: '320x400' }}"
+          alt="{{ block.settings.title }}"
+          class="card__image"
+          width="320"
+          height="400"
+        >
+        <button class="card__button" onclick="openModal({{ block.id }})">
+          <!-- Eye SVG Icon -->
+          <svg
+            class="card__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 5c-7.633 0-11 7-11 7s3.367 7 11 7 11-7 11-7-3.367-7-11-7zm0 12c-2.762 0-5-2.239-5-5s2.238-5 5-5c2.761 0 5 2.239 5 5s-2.239 5-5 5zm0-8c-1.654 0-3 1.347-3 3s1.346 3 3 3 3-1.347 3-3-1.346-3-3-3z"/>
+          </svg>
+          {{ block.settings.button_label }}
+        </button>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Modals -->
+  {% for block in section.blocks %}
+    <div class="modal" id="modal-{{ block.id }}" style="display: none;" onclick="closeModal({{ block.id }})">
+      <div class="modal__content" onclick="event.stopPropagation()">
+        <p>{{ block.settings.modal_content }}</p>
+        <button class="modal__close" onclick="closeModal({{ block.id }})">Close</button>
+      </div>
+    </div>
+  {% endfor %}
+</section>
+
+<script>
+  function scrollCards(direction) {
+    const container = document.getElementById('cardsContainer');
+    const scrollAmount = 340;
+    if (direction === 'left') {
+      container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    } else {
+      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  }
+
+  function openModal(id) {
+    const modal = document.getElementById(`modal-${id}`);
+    if (modal) {
+      modal.style.display = 'flex';
+    }
+  }
+
+  function closeModal(id) {
+    const modal = document.getElementById(`modal-${id}`);
+    if (modal) {
+      modal.style.display = 'none';
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Cards with Modal",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Featured Cards"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card Title",
+          "default": "Card Title"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "Open Modal"
+        },
+        {
+          "type": "textarea",
+          "id": "modal_content",
+          "label": "Modal Content",
+          "default": "This is the modal content."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Cards with Modal"
+    }
+  ]
+}
+{% endschema %}
